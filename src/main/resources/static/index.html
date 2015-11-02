@@ -12,20 +12,30 @@
     <script src="filesaver/Blob.js"></script>
     <script src="filesaver/FileSaver.min.js"></script>
     <script src="js/myapp.js"></script>
-    <link rel="stylesheet" href="bootstrap-3.3.5/css/bootstrap.css" />
+    <link rel="stylesheet" href="bootstrap-3.3.5/css/bootstrap.css"/>
     <link rel="stylesheet" href="css/myapp.css"/>
 </head>
 <body>
 <div id="main" ng-controller="routeController as routeCtrl">
     <div id="top">
-        <h1>DOCX to TEI Conversion Webapplication</h1>
-        <nav>
-            <ul class="nav nav-justified">
-                <li><a href="#" ng-click="showMain()">Main</a></li>
-                <li><a href="#" ng-click="showHelp()">Help</a></li>
-                <li><a href="#" ng-click="showImpressum()">Impressum</a></li>
-            </ul>
-        </nav>
+        <div style="width: 10%; float: left; text-align: left">
+            <a href="http://www.oesterreichische-geschichte.at" target="_blank"><img src="images/logo.png"
+                                                                                     alt="Commission for Modern Austrian History"/></a>
+        </div>
+        <div style="width: 80%; float: left;">
+            <h1>DOCX to TEI Conversion Webapplication</h1>
+            <nav>
+                <ul class="nav nav-justified">
+                    <li><a href="#" ng-click="showMain()">Main</a></li>
+                    <li><a href="#" ng-click="showHelp()">Help</a></li>
+                    <li><a href="#" ng-click="showImpressum()">Impressum</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div style="width: 10%; float: left; text-align: right">
+            <a href="http://www.oesterreichische-geschichte.at" target="_blank"><img src="images/logo.png"
+                                                                                     alt="Commission for Modern Austrian History"/></a>
+        </div>
     </div>
     <div id="middle">
         <div ng-include="template"></div>

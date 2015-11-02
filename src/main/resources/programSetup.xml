@@ -13,7 +13,6 @@
       <description>Converts comments in DOCX using the commenting function to &lt;rs&gt;.</description>
       <xsltStylesheets>
         <string>additional/commentToRs.xsl</string>
-        <string>additional/rsToRef.xsl</string>
       </xsltStylesheets>
     </ConversionOption>
     <ConversionOption>

@@ -14,7 +14,14 @@
     height: 120px;
 }
 
+#top a img {
+    border: none;
+    height: 120px;
+}
+
 #middle {
+    clear: both;
+    margin-top: 20px;
     height: 500px;
 }
 
