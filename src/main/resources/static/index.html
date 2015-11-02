@@ -1,0 +1,35 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+    <meta charset="UTF-8"/>
+    <title>DOCX To TEI Conversion</title>
+    <script src="jquery-2.1.4/jquery-2.1.4.min.js"></script>
+    <script src="angular-1.4.7/angular.min.js"></script>
+    <script src="angular-1.4.7/angular-sanitize.min.js"></script>
+    <script src="angular-1.4.7/ui-bootstrap-tpls-0.14.2.min.js"></script>
+    <script src="angular-1.4.7/ng-file-upload.min.js"></script>
+    <script src="angular-1.4.7/ng-file-upload-shim.min.js"></script>
+    <script src="filesaver/Blob.js"></script>
+    <script src="filesaver/FileSaver.min.js"></script>
+    <script src="js/myapp.js"></script>
+    <link rel="stylesheet" href="bootstrap-3.3.5/css/bootstrap.css" />
+    <link rel="stylesheet" href="css/myapp.css"/>
+</head>
+<body>
+<div id="main" ng-controller="routeController as routeCtrl">
+    <div id="top">
+        <h1>DOCX to TEI Conversion Webapplication</h1>
+        <nav>
+            <ul class="nav nav-justified">
+                <li><a href="#" ng-click="showMain()">Main</a></li>
+                <li><a href="#" ng-click="showHelp()">Help</a></li>
+                <li><a href="#" ng-click="showImpressum()">Impressum</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div id="middle">
+        <div ng-include="template"></div>
+    </div>
+</div>
+</body>
+</html>

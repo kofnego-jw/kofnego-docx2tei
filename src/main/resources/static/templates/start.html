@@ -1,0 +1,78 @@
+<div ng-controller="testUploadController as ctrl">
+    <h3>Welcome</h3>
+
+    <p>Please add options as you please and then either select the file or drag the file the drop-off area and then
+        click on "convert".</p>
+
+    <div class="middleLeft">
+
+        <h4>Select the options</h4>
+
+        Please select the conversion options.
+
+        <div class="optionList">
+            <p ng-repeat="co in conversionOptions">
+                <button class="btn btn-default"
+                        ng-click="ctrl.addConversionOption(co.name)" ng-bind-html="co.name"></button>
+                <span ng-show="co.description">
+                    <button type="button" class="btn btn-default btn-xs" uib-popover="{{co.description}}"
+                            popover-trigger="focus">desc
+                    </button>
+                </span>
+            </p>
+        </div>
+
+    </div>
+
+    <div class="middleLeft">
+        <h4>Selected options</h4>
+
+        <div ng-show="selectedConversionOptions.length==0">
+            <p>You have not set any options. The conversion will be run as default without any post processing.</p>
+        </div>
+        <div class="optionList">
+            <p ng-repeat="co in selectedConversionOptions">
+                {{co.name}}
+                <button ng-click="ctrl.removeConversionOption($index)">
+                    <span class="glyphicon glyphicon-minus-sign"></span>
+                </button>
+            </p>
+        </div>
+
+    </div>
+
+    <div class="middleLeft">
+
+        <h4>Select File and Convert</h4>
+
+        <form name="form">
+            <button class="button" ngf-select ng-model="file" name="file"
+                    accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document">Select
+            </button>
+            <div ngf-drop ng-model="file" class="drop-box"
+                 accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                <p>Please drag and drop your file here.</p>
+            </div>
+            <div style="font-size: smaller;" data-ng-show="file!=null">
+
+                <p>The File to be uploaded is called <span class="bg-primary">{{file.name}}</span> and
+                    contains <span class="bg-primary">{{file.size}}</span> bytes.</p>
+
+                <strong data-ng-show="file.error" class="error text-danger">{{file.error}}</strong>
+            </div>
+
+            <div ng-show="file!=null">
+                <div class="form-group">
+                    <button type="submit" ng-click="submitAndView()">Convert &amp; View</button>
+                    <p class="help-block">Popup must be enabled.</p>
+                </div>
+                <div class="form-group">
+                    <button type="submit" ng-click="submitAndDownload()">Convert &amp; Download</button>
+                </div>
+            </div>
+
+        </form>
+
+
+    </div>
+</div>

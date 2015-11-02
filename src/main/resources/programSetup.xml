@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ProgrammSetup>
+  <conversionOptionSet>
+    <ConversionOption>
+      <name>+NewLineAfterP</name>
+      <description>Adds a new line before each &lt;div&gt; and &lt;p&gt;.</description>
+      <xsltStylesheets>
+        <string>additional/addRN2P.xsl</string>
+      </xsltStylesheets>
+    </ConversionOption>
+    <ConversionOption>
+      <name>CommentToRS</name>
+      <description>Converts comments in DOCX using the commenting function to &lt;rs&gt;.</description>
+      <xsltStylesheets>
+        <string>additional/commentToRs.xsl</string>
+        <string>additional/rsToRef.xsl</string>
+      </xsltStylesheets>
+    </ConversionOption>
+    <ConversionOption>
+      <name>RsToRef</name>
+      <description>Converts &lt;rs&gt; in TEI to &lt;persName&gt;, &lt;placeName&gt; or &lt;subject&gt;, if the @key starts with 'P:', 'O:' and 'S:'.</description>
+      <xsltStylesheets>
+        <string>additional/rsToRef.xsl</string>
+      </xsltStylesheets>
+    </ConversionOption>
+    <ConversionOption>
+      <name>RecogGermanDates</name>
+      <description>Tries to find dates in German (e.g. '17.10.2000', '8. 2. 1876', 'März 1768' or '1492') and convert them to &lt;date&gt; with @when.</description>
+      <xsltStylesheets>
+        <string>additional/germanDates.xsl</string>
+      </xsltStylesheets>
+    </ConversionOption>
+  </conversionOptionSet>
+  <savingLocation>./programSetup.xml</savingLocation>
+</ProgrammSetup>
