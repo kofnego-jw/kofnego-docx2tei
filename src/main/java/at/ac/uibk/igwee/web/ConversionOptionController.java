@@ -24,6 +24,10 @@ public class ConversionOptionController {
 
         if (programSetup==null) throw new RuntimeException("Cannot read the program setup.");
 
+//        try {
+//            Thread.sleep(5000);
+//        } catch (Exception ignored) {}
+
         return programSetup.getConversionOptions()
                 .stream()
                 .map(ConversionOptionFW::create)

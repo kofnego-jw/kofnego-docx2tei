@@ -1,36 +1,27 @@
 package at.ac.uibk.igwee.xslt.impl;
 
-import static at.ac.uibk.igwee.xslt.impl.XsltUtils.createResult;
-import static at.ac.uibk.igwee.xslt.impl.XsltUtils.createSource;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.Closeable;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.LinkedList;
-import java.util.Map;
+import at.ac.uibk.igwee.xslt.XsltException;
+import at.ac.uibk.igwee.xslt.XsltService;
+import net.sf.saxon.TransformerFactoryImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
+import java.io.*;
+import java.util.LinkedList;
+import java.util.Map;
 
-import net.sf.saxon.TransformerFactoryImpl;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import aQute.bnd.annotation.component.Component;
-import at.ac.uibk.igwee.xslt.XsltException;
-import at.ac.uibk.igwee.xslt.XsltService;
+import static at.ac.uibk.igwee.xslt.impl.XsltUtils.createResult;
+import static at.ac.uibk.igwee.xslt.impl.XsltUtils.createSource;
 
 /**
  * Implementation of XsltService using Saxon API.
  * @author Apple
  *
  */
-@Component
 public class SaxonXsltServiceImpl implements XsltService, Closeable {
 	
 	private static final int TRANSFORMER_CACHE_SIZE = 10;

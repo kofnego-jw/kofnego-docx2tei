@@ -1,5 +1,13 @@
 package at.ac.uibk.igwee.docx2tei.impl;
 
+import at.ac.uibk.igwee.docx2tei.Docx2TeiException;
+import at.ac.uibk.igwee.docx2tei.Docx2TeiService;
+import at.ac.uibk.igwee.xslt.XsltService;
+import at.ac.uibk.igwee.ziputils.api.Unzipper;
+import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,17 +17,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.io.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import aQute.bnd.annotation.component.Component;
-import aQute.bnd.annotation.component.Reference;
-import at.ac.uibk.igwee.docx2tei.Docx2TeiException;
-import at.ac.uibk.igwee.docx2tei.Docx2TeiService;
-import at.ac.uibk.igwee.xslt.XsltService;
-import at.ac.uibk.igwee.ziputils.api.Unzipper;
-
 /**
  * Default implementation of the Docx2TeiService. Uses a stylesheets.zip
  * contained in the jar-file as the base of the stylesheet. It also need an
@@ -28,7 +25,6 @@ import at.ac.uibk.igwee.ziputils.api.Unzipper;
  * @author Joseph
  * 
  */
-@Component
 public class Docx2TeiServiceImpl implements Docx2TeiService {
 	/**
 	 * "word-directory" The default paramname for the Word-Directory.
@@ -113,7 +109,6 @@ public class Docx2TeiServiceImpl implements Docx2TeiService {
 		this.stylesheetFile = new File(stylesheetDir, DEFAULT_XSLT_LOCATION);
 	}
 
-	@Reference
 	public void setXsltService(XsltService service) {
 		this.xsltService = service;
 	}

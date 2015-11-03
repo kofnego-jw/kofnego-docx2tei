@@ -1,6 +1,18 @@
-var withoutPort = true;
+var withoutPort = false;
 
 var myApp = angular.module("myApp", ['ngSanitize', 'ngFileUpload', 'ui.bootstrap']);
+
+myApp.service("loadingNowService", ['$rootScope',
+    function($rootScope){
+        var loadingNow = false;
+        this.setLoadingNow = function(bool) {
+            loadingNow = bool;
+            $rootScope.$broadcast("LoadingNowChanged");
+        };
+        this.getLoadingNow = function(){
+            return loadingNow;
+        };
+    }]);
 
 myApp.service("conversionOptionsService", ["$http", "$rootScope",
     function($http, $rootScope) {
@@ -11,10 +23,10 @@ myApp.service("conversionOptionsService", ["$http", "$rootScope",
         };
 
         this.loadConversionOptions = function() {
-            console.log("Getting ConversionOptions...");
+            //console.log("Getting ConversionOptions...");
             $http({
                 method: 'GET',
-                url   : withoutPort ? 'options' : 'http://localhost:8080/options'
+                url   : withoutPort ? 'options' : 'http://localhost:1340/options'
             })
                 .then(function(resp){
                     conversionOptions = resp.data;
@@ -28,9 +40,13 @@ myApp.service("conversionOptionsService", ["$http", "$rootScope",
 
     }]);
 
-myApp.controller("routeController", ["$scope",
-    function ($scope) {
+myApp.controller("routeController", ["$scope", "loadingNowService",
+    function ($scope, loadingNowService) {
         $scope.template = "templates/start.html";
+        $scope.loadingNow = false;
+        $scope.$on("LoadingNowChanged", function(){
+            $scope.loadingNow = loadingNowService.getLoadingNow();
+        });
         $scope.showImpressum = function () {
             $scope.template = "templates/impressum.html";
         };
@@ -42,16 +58,19 @@ myApp.controller("routeController", ["$scope",
         }
     }]);
 
-myApp.controller("testUploadController", ['$scope', 'Upload', 'conversionOptionsService',
-    function ($scope, Upload, conversionOptionsService) {
+myApp.controller("testUploadController", ['$scope', 'Upload', 'conversionOptionsService', 'loadingNowService',
+    function ($scope, Upload, conversionOptionsService, loadingNowService) {
 
         $scope.conversionOptions = [];
 
         $scope.selectedConversionOptions = [];
 
+        loadingNowService.setLoadingNow(true);
+
         $scope.$on("ConversionOptionsAvailable", function() {
             $scope.conversionOptions = conversionOptionsService.getConversionOptions();
-            console.log($scope.conversionOptions);
+            //console.log($scope.conversionOptions);
+            loadingNowService.setLoadingNow(false);
         });
 
         this.addConversionOption = function(coName) {
@@ -86,8 +105,10 @@ myApp.controller("testUploadController", ['$scope', 'Upload', 'conversionOptions
                 cos.push(co.name);
             });
 
+            loadingNowService.setLoadingNow(true);
+
             Upload.upload({
-                url: withoutPort ? 'convert' : 'http://localhost:8080/convert',
+                url: withoutPort ? 'convert' : 'http://localhost:1340/convert',
                 data: {
                     file: file,
                     conversionOptions: JSON.stringify(cos)
@@ -95,7 +116,8 @@ myApp.controller("testUploadController", ['$scope', 'Upload', 'conversionOptions
                 responseType: "arraybuffer"
             }).then(function (resp) {
                 var data = resp.data;
-                console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.status);
+                //console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.status);
+                loadingNowService.setLoadingNow(false);
 
                 var blob = new Blob([data], {type: "text/xml;charset=UTF-8"});
 
@@ -108,10 +130,14 @@ myApp.controller("testUploadController", ['$scope', 'Upload', 'conversionOptions
                 }
 
             }, function (resp) {
-                alert("Cannot convert: " + resp.status);
+                loadingNowService.setLoadingNow(false);
+
+                var data = JSON.parse(String.fromCharCode.apply(null, new Uint8Array(resp.data)));
+
+                alert("Cannot convert: " + data.status + " " + data.message);
+
             }, function (evt) {
-                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+                // loadingNowService.setLoadingNow(false);
             });
         };
 

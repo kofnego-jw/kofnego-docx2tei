@@ -1,5 +1,11 @@
 package at.ac.uibk.igwee.docx2tei.impl;
 
+import at.ac.uibk.igwee.docx2tei.Docx2TeiException;
+import at.ac.uibk.igwee.docx2tei.Docx2TeiService;
+import at.ac.uibk.igwee.xslt.XsltService;
+import at.ac.uibk.igwee.ziputils.api.Unzipper;
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,14 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-
-import org.apache.commons.io.FileUtils;
-
-import aQute.bnd.annotation.component.Reference;
-import at.ac.uibk.igwee.docx2tei.Docx2TeiException;
-import at.ac.uibk.igwee.docx2tei.Docx2TeiService;
-import at.ac.uibk.igwee.xslt.XsltService;
-import at.ac.uibk.igwee.ziputils.api.Unzipper;
 
 /**
  * Implementation of Docx2TeiService, uses a default XSLT-URL for 
@@ -47,7 +45,6 @@ public class Docx2TeiDeflatedServiceImpl implements Docx2TeiService {
 	
 	
 	
-	@Reference
 	public void setXsltService(XsltService service) throws Docx2TeiException {
 		this.xsltService = service;
 	}

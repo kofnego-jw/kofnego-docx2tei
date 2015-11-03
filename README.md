@@ -31,27 +31,26 @@ You can either build the application from the source, or you can get a binary co
 * Maven
 * Internet connection
 * A modern browser, capable of using HTML5 Files API, especially BLOB. According to http://caniuse.com/#feat=blobbuilder these are:
-... Firefox from version 13
-... Chrome from version 20
-... Internet Explorer from version 10
-... Safari from version 6
-... Opera from version 12.1
+  * Firefox from version 13
+  * Chrome from version 20
+  * Internet Explorer from version 10
+  * Safari from version 6
+  * Opera from version 12.1
 * The conversion routines are based upon the Stylesheets of the TEI Consortium
 * The following JAVA libraries are used:
-... Spring Boot (Spring Framework and Spring MVC)
-... Saxon XSLT Processor
-... BndTools (actually not used)
-... Jackson JSON Mapper
-... Apache Commons IO
-... Apache Tomcat (Embedded)
-... slf4j
-... XStream XML Mapper
+  * Spring Boot (Spring Framework and Spring MVC)
+  * Saxon XSLT Processor
+  * Jackson JSON Mapper
+  * Apache Commons IO
+  * Apache Tomcat (Embedded)
+  * slf4j
+  * XStream XML Mapper
 * The following Javascript and CSS Libraries are used
-... Bootstrap
-... JQuery
-... Angular JS
-... FileSaver.js
-... Blob.js
+  * Bootstrap
+  * JQuery
+  * Angular JS
+  * FileSaver.js
+  * Blob.js
 
 ### Building Spring Boot Application
 Just issue a ```mvn install``` and it will create a jar file called

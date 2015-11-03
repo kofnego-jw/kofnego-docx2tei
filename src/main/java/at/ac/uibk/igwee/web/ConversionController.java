@@ -54,6 +54,8 @@ public class ConversionController {
         List<String> cos = conversionOptions==null ? Collections.emptyList() :
                 OBJECT_MAPPER.readValue(conversionOptions, List.class);
 
+//        Thread.sleep(5000);
+
         InputStream converted = mainConverter.convert(file.getOriginalFilename(), file.getInputStream(), cos);
         response.setContentType("text/xml;charset=utf-8");
         OutputStream os = response.getOutputStream();

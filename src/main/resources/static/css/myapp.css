@@ -7,8 +7,6 @@
     padding: 5px;
 }
 
-
-
 #top {
     text-align: center;
     height: 120px;
@@ -25,7 +23,6 @@
     height: 500px;
 }
 
-
 #middleLeft {
     float: left;
     width: 29%;
@@ -34,8 +31,6 @@
     padding-left: 0.5%;
     padding-right: 0.5%;
 }
-
-
 
 .popover-content {
     max-height: 150px;
@@ -78,4 +73,16 @@
     width: 300px;
     margin-left: 25px;
     float: left;
+}
+
+#loadingDiv {
+    background-color: #000000;
+    color: #ffffff;
+    opacity: 0.8;
+    z-index: 1000;
+    height: 640px;
+    position: fixed;
+    width: 988px;
+    text-align: center;
+    padding-top: 320px;
 }
