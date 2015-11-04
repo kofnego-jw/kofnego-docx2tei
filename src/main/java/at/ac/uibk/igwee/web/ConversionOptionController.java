@@ -11,13 +11,24 @@ import java.util.stream.Collectors;
 
 /**
  * Created by Joseph on 31.10.15.
+ *
+ * The Controller serving the possible options for conversion.
+ *
+ * @author Joseph
  */
 @Controller
 public class ConversionOptionController {
 
+    /**
+     * ProgramSetup
+     */
     @Autowired
     private ProgramSetup programSetup;
 
+    /**
+     *  main method for serving the options
+     * @return a list of ConversionOptionFW, formatted as JSON
+     */
     @RequestMapping("/options")
     @ResponseBody
     public List<ConversionOptionFW> getOptions() {

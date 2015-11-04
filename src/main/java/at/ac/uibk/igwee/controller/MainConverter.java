@@ -16,21 +16,42 @@ import java.util.stream.Collectors;
 
 /**
  * Created by Joseph on 29.10.2015.
+ *
+ * Main Converter Object
+ *
+ * @author Joseph
  */
 @Service
 public class MainConverter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MainConverter.class);
 
+    /**
+     * Autowired Docx2teiService
+     */
     @Autowired
     private Docx2TeiService docx2TeiService;
 
+    /**
+     * Autowired XsltService
+     */
     @Autowired
     private XsltService xsltService;
 
+    /**
+     * Autowired ProgramSetup
+     */
     @Autowired
     private ProgramSetup setup;
 
+    /**
+     * Convert an inputStream
+     * @param docxName The name of the docxfile
+     * @param docxStream The inputstream containing the docx file, still zipped.
+     * @param addNames The names of the additional xslts that are to be performed
+     * @return an Inputstream of the result
+     * @throws Exception
+     */
     public InputStream convert(String docxName, InputStream docxStream, List<String> addNames) throws Exception {
         File tmpFile = File.createTempFile(docxName, ".docx");
         FileUtils.copyInputStreamToFile(docxStream, tmpFile);
@@ -43,6 +64,13 @@ public class MainConverter {
         return convert(tmpFile,cc);
     }
 
+    /**
+     * Main method of the conversion
+     * @param docxFile the docx file
+     * @param conversionConfig the Configuration for this conversion
+     * @return an inputstream containing the result xml
+     * @throws Exception
+     */
     public InputStream convert(File docxFile, ConversionConfig conversionConfig) throws Exception {
         LOGGER.info("Converting {} with {}.", docxFile, conversionConfig);
         InputStream tei = docx2TeiService.doDocx2Tei(docxFile);

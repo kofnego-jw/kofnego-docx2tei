@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 /**
  * Copied and pasted from
  * https://spring.io/guides/gs/rest-service-cors/ (2015-10-16)
+ *
+ * Simple CORS Filter for allowing JSON request from other sources. Important when testing.
  */
 @Component
 public class SimpleCORSFilter implements Filter {
@@ -21,8 +23,11 @@ public class SimpleCORSFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
-        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Max-Age", "-1");
         response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        response.setHeader("Cache-Control-Max-Age", "-1");
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Cache-Control", "no-cache");
         chain.doFilter(req, res);
     }
 

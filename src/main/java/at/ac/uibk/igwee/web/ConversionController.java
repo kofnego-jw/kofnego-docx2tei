@@ -19,15 +19,32 @@ import java.util.List;
 
 /**
  * Created by Joseph on 31.10.15.
+ *
+ * Main Controller for doing conversion.
+ *
+ * @author Joseph
  */
 @Controller
 public class ConversionController {
 
+    /**
+     * Object Mapper, used for converting conversion options to java object
+     */
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
+    /**
+     * MainConverter
+     */
     @Autowired
     private MainConverter mainConverter;
 
+    /**
+     * Old method for conversion. Returns a JSON instead of ByteArray.
+     * @param file the Multipart File to be converted
+     * @param conversionOptions the conversion options. Should be a JSON String
+     * @return a NameAndContentResponse
+     * @throws Exception if anything goes wrong.
+     */
 //    @RequestMapping(value = "/convert", method = RequestMethod.POST)
 //    @ResponseBody
     public NameAndContentResponse convert(@RequestParam("file")
@@ -47,6 +64,14 @@ public class ConversionController {
         return new NameAndContentResponse(filename, xml);
     }
 
+    /**
+     * The new method for conversion. Will return nothing, the result of conversion
+     * is written into the OutputStream of the HttpServletResponse.
+     * @param file the multipart file to be converted
+     * @param conversionOptions a json string representing the conversion options
+     * @param response the httpservletResponse, should be injected by Spring
+     * @throws Exception
+     */
     @RequestMapping(value="/convert", method = RequestMethod.POST)
     public void convert(@RequestParam("file") MultipartFile file,
                         @RequestParam(value = "conversionOptions", required = false) String conversionOptions,

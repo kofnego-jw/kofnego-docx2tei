@@ -16,17 +16,32 @@ import org.springframework.context.annotation.Import;
 import java.io.File;
 import java.io.InputStream;
 
+/**
+ * Main Application. Scans controller and web folder for components.
+ */
 @SpringBootApplication
 @ComponentScan(basePackages = {"at.ac.uibk.igwee.web", "at.ac.uibk.igwee.controller"})
 public class KofnegoTei2docxApplication {
 
+    /**
+     * Name of the additional stylehseet directory
+     */
     private static final String ADDITIONAL_FOLDER = "docx2tei_add";
 
+    /**
+     *
+     * @return XsltService
+     */
     @Bean
     public XsltService xsltService() {
         return new SaxonXsltServiceImpl();
     }
 
+    /**
+     *
+     * @return Docx2TeiService
+     * @throws Exception
+     */
     @Bean
     public Docx2TeiService docx2TeiService() throws Exception{
         Docx2TeiServiceImpl impl = new Docx2TeiServiceImpl();
@@ -34,6 +49,15 @@ public class KofnegoTei2docxApplication {
         return impl;
     }
 
+    /**
+     *
+     * This method will create a temporary directory for additional stylesheets,
+     * temporary directory for other purposes, and load the programSetup.xml
+     * from the class path.
+     *
+     * @return Default ProgramSetup
+     * @throws Exception
+     */
     @Bean
     public ProgramSetup programmSetup() throws Exception {
 
@@ -61,6 +85,10 @@ public class KofnegoTei2docxApplication {
         return oldPS;
     }
 
+    /**
+     * Starts the spring application
+     * @param args The parameters will be ignored :)
+     */
     public static void main(String[] args) {
         SpringApplication.run(KofnegoTei2docxApplication.class, args);
     }

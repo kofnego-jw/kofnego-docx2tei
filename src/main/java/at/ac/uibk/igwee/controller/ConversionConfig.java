@@ -5,9 +5,16 @@ import java.util.List;
 
 /**
  * Created by Joseph on 29.10.2015.
+ *
+ * Configuration for ONE conversion
+ *
+ * @author Joseph
  */
 public class ConversionConfig {
 
+    /**
+     * List of ProcessingCommand
+     */
     private final List<ProcessingCommand> postProcessing = new ArrayList<>();
 
     public ConversionConfig(List<ProcessingCommand> postProcessing) {

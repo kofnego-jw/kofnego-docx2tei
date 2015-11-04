@@ -4,11 +4,21 @@ import java.util.Map;
 
 /**
  * Created by Joseph on 29.10.2015.
+ *
+ * A command
+ *
+ * @author Joseph
  */
 public class ProcessingCommand {
 
+    /**
+     * Name of the option
+     */
     private final String xsltName;
 
+    /**
+     * The parameters that are to be passed to the xslt
+     */
     private final Map<String,String> parameters;
 
     public ProcessingCommand(String xsltName, Map<String, String> parameters) {

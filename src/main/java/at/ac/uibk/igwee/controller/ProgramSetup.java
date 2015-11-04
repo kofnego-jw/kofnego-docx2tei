@@ -15,19 +15,42 @@ import java.util.stream.Collectors;
 
 /**
  * Created by Joseph on 29.10.2015.
+ *
+ * ProgramSetup
+ *
+ * @author Joseph
  */
 public class ProgramSetup {
 
+    /**
+     * XML Prologue
+     */
     private static final String XML_PROLOGUE = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 
+    /**
+     * Logger
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(ProgramSetup.class);
 
+    /**
+     * A Set of ConversionOption
+     */
     private Set<ConversionOption> conversionOptionSet = new HashSet<>();
 
+    /**
+     * Saving Location of the program setup
+     */
     private String savingLocation;
 
+    /**
+     * Additional Stylesheets are kept here. Transient, because these files are unpacked into a
+     * temporary directory
+     */
     transient private File additionalStylesheetDir;
 
+    /**
+     * Temporary directory, for saving files.
+     */
     transient private File tmpDir;
 
     public ProgramSetup(File tmpDir, File additionalStylesheetDir, Collection<ConversionOption> conversionOptionSet) {
@@ -43,6 +66,11 @@ public class ProgramSetup {
         loadProgramSetup();
     }
 
+    /**
+     * Adds an option
+     * @param co The conversion option to be added. If there is one option already with the name,
+     *           the old one will be removed first.
+     */
     public void addConversionOption(ConversionOption co) {
         if (co==null || co.getName()==null || co.getName().isEmpty()) {
             LOGGER.warn("Cannot add ConversionOption without a name.");
@@ -53,6 +81,10 @@ public class ProgramSetup {
         LOGGER.info("A ConversionOption {} has been added.", co.getName());
     }
 
+    /**
+     * Removes a option
+     * @param co the option to be removed
+     */
     public void removeConversionOption(ConversionOption co) {
         if (co==null || co.getName()==null) {
             LOGGER.warn("Trying to remove a ConversionOption with no name.");
@@ -69,6 +101,12 @@ public class ProgramSetup {
         LOGGER.debug("ConversionOption with name {} has been removed.", old.getName());
     }
 
+    /**
+     *
+     * @param name the name of the option
+     * @return the ConversionOption with this name
+     * @throws NoSuchElementException if no option with this name can be found.
+     */
     public ConversionOption getConversionOption(String name) throws NoSuchElementException {
         if (name==null) throw new NoSuchElementException();
         return this.conversionOptionSet.stream()
@@ -81,6 +119,11 @@ public class ProgramSetup {
         return this.conversionOptionSet.contains(co);
     }
 
+    /**
+     *
+     * @param conversionOptionName Name of the option
+     * @return the XSLT Strings (as relative path to the additionalStylesheetDirectory) as a List
+     */
     public List<String> getXsltURIs(String conversionOptionName) {
         ConversionOption co;
         try {
@@ -95,8 +138,13 @@ public class ProgramSetup {
                 .collect(Collectors.toList());
     }
 
+    /**
+     *
+     * @param optionName Name of the option
+     * @return the default parameters set in the ProgramSetup, or null if none is present.
+     */
     public Map<String,String> getDefaultParameters(String optionName) {
-        ConversionOption co = null;
+        ConversionOption co;
         try {
             co = getConversionOption(optionName);
         } catch(Exception e) {
@@ -105,6 +153,12 @@ public class ProgramSetup {
         return co.getDefaultParameters();
     }
 
+    /**
+     * Joins two ProgramSetups together. The ConversionOptions are merged.
+     * If there are options with the same name, then the option of the
+     * original (not of ps) is used.
+     * @param ps another ProgramSetup.
+     */
     protected void joinConversionOptions(ProgramSetup ps) {
         ps.conversionOptionSet.stream()
                 .forEach(co -> {
@@ -145,6 +199,9 @@ public class ProgramSetup {
         this.tmpDir = tmpDir;
     }
 
+    /**
+     * XStream Object for XML Serialization
+     */
     public static final XStream X;
     static {
         X = new XStream();
@@ -152,6 +209,9 @@ public class ProgramSetup {
         X.alias("ConversionOption", ConversionOption.class);
     }
 
+    /**
+     * Loads the programSetup from the saving location, if the savingLocation is set.
+     */
     @PostConstruct
     public void loadProgramSetup() {
         if (savingLocation!=null && !savingLocation.isEmpty()) {
@@ -167,6 +227,9 @@ public class ProgramSetup {
         }
     }
 
+    /**
+     * Saves the programSetup in the given saving location.
+     */
     @PreDestroy
     public void saveProgramSetup() {
         if (savingLocation!=null && !savingLocation.isEmpty()) {
@@ -182,6 +245,12 @@ public class ProgramSetup {
         }
     }
 
+    /**
+     *
+     * @param in the inputStream containing the XML content for the programSetup
+     * @return a programSetup with the content
+     * @throws Exception if deserialization fails.
+     */
     public static ProgramSetup loadProgramSetup(InputStream in) throws Exception {
         return (ProgramSetup) X.fromXML(in);
     }

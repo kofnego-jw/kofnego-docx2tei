@@ -7,15 +7,32 @@ import java.util.Map;
 
 /**
  * Created by Joseph on 31.10.15.
+ *
+ * A ConversionOption represents an option in the conversion.
+ *
+ * @author Joseph
  */
 public class ConversionOption {
 
+    /**
+     * name of the option
+     */
     private String name;
 
+    /**
+     * description of the option
+     */
     private String description;
 
+    /**
+     * List of Strings: The URL of the xsltStylesheets
+     */
     private List<String> xsltStylesheets;
 
+    /**
+     * The default parameters that will be passed to the stylesheets.
+     * Every stylesheet will get these parameters.
+     */
     private Map<String,String> defaultParameters;
 
     public ConversionOption() {
