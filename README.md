@@ -52,13 +52,16 @@ You can either build the application from the source, or you can get a binary co
   * FileSaver.js
   * Blob.js
 
+### Issues
+* Internet Explorer 11 does not support blob to file for preview. But download functions as expected.
+
 ### Building Spring Boot Application
-Just issue a ```mvn install``` and it will create a jar file called
-```kofnego-tei2docx-0.0.1-SNAPSHOT.jar```.
+Just issue a `mvn install` and it will create a jar file called
+`kofnego-tei2docx-0.0.1-SNAPSHOT.jar`.
 
 ### Running the application
 Start the program with
-```java -jar kofnego-tei2docx-0.0.1-SNAPSHOT.jar```
+`java -jar kofnego-tei2docx-0.0.1-SNAPSHOT.jar`
 And open your browser to
 [http://localhost:1340/](http://localhost:1340)
 And you should see the application running.
@@ -68,7 +71,7 @@ And you should see the application running.
 
 ### Change Server Port
 If you want the server to use another port, change the
-```server.port=1340```
+`server.port=1340`
 in the file "src/main/resources/application.properties".
 
 ### Add other configurations

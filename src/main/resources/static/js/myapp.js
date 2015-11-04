@@ -1,4 +1,4 @@
-var withoutPort = false;
+var withoutPort = true;
 
 var myApp = angular.module("myApp", ['ngSanitize', 'ngFileUpload', 'ui.bootstrap']);
 
