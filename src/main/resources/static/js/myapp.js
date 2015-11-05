@@ -14,8 +14,8 @@ myApp.service("loadingNowService", ['$rootScope',
         };
     }]);
 
-myApp.service("conversionOptionsService", ["$http", "$rootScope",
-    function($http, $rootScope) {
+myApp.service("conversionOptionsService", ["$http", "$rootScope", "loadingNowService",
+    function($http, $rootScope, loadingNowService) {
         var conversionOptions = [];
 
         this.getConversionOptions = function() {
@@ -24,6 +24,7 @@ myApp.service("conversionOptionsService", ["$http", "$rootScope",
 
         this.loadConversionOptions = function() {
             //console.log("Getting ConversionOptions...");
+            loadingNowService.setLoadingNow(true);
             $http({
                 method: 'GET',
                 url   : withoutPort ? 'options' : 'http://localhost:1340/options'
@@ -31,7 +32,9 @@ myApp.service("conversionOptionsService", ["$http", "$rootScope",
                 .then(function(resp){
                     conversionOptions = resp.data;
                     $rootScope.$broadcast("ConversionOptionsAvailable");
+                    loadingNowService.setLoadingNow(false);
                 }, function(resp){
+                    loadingNowService.setLoadingNow(false);
                     alert("Cannot load conversion options.");
                 });
         };
@@ -64,8 +67,6 @@ myApp.controller("testUploadController", ['$scope', 'Upload', 'conversionOptions
         $scope.conversionOptions = [];
 
         $scope.selectedConversionOptions = [];
-
-        loadingNowService.setLoadingNow(true);
 
         $scope.$on("ConversionOptionsAvailable", function() {
             $scope.conversionOptions = conversionOptionsService.getConversionOptions();

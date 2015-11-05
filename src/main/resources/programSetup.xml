@@ -2,7 +2,7 @@
 <ProgrammSetup>
   <conversionOptionSet>
     <ConversionOption>
-      <name>+NewLineAfterP</name>
+      <name>NewLineAfterP</name>
       <description>Adds a new line before each &lt;div&gt; and &lt;p&gt;.</description>
       <xsltStylesheets>
         <string>additional/addRN2P.xsl</string>
@@ -13,6 +13,13 @@
       <description>Converts comments in DOCX using the commenting function to &lt;rs&gt;.</description>
       <xsltStylesheets>
         <string>additional/commentToRs.xsl</string>
+      </xsltStylesheets>
+    </ConversionOption>
+    <ConversionOption>
+      <name>uibkToAnchor</name>
+      <description>Converts the &lt;uibk:comment&gt; to &lt;tei:anchor&gt;</description>
+      <xsltStylesheets>
+        <string>additional/uibk2anchor.xsl</string>
       </xsltStylesheets>
     </ConversionOption>
     <ConversionOption>
