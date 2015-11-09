@@ -1,39 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ProgrammSetup>
-  <conversionOptionSet>
+  <conversionOptions>
     <ConversionOption>
-      <name>CommentToRS</name>
-      <description>Converts comments in DOCX using the commenting function to &lt;rs&gt;.</description>
+      <name>MS comments to rs</name>
+      <description>Converts comments created using the commenting function in DOCX to &lt;rs&gt;.
+        This stylesheet MUST come before &quot;UIBK to &lt;anchor&gt;&quot;.</description>
       <xsltStylesheets>
         <string>additional/commentToRs.xsl</string>
+      </xsltStylesheets>
+      <defaultParameters/>
+    </ConversionOption>
+    <ConversionOption>
+      <name>UIBK to anchor</name>
+      <description>Default conversion will convert the anchors in DOCX comments to &lt;uibk:comment&gt;.
+        This stylesheet will convert the &lt;uibk:comment&gt; to &lt;tei:anchor&gt;.
+        When combined with &quot;MS comments&quot;, this stylesheet MUST come after &quot;MS comments&quot;.</description>
+      <xsltStylesheets>
+        <string>additional/uibk2anchor.xsl</string>
+      </xsltStylesheets>
+      <defaultParameters/>
+    </ConversionOption>
+    <ConversionOption>
+      <name>rs to ref</name>
+      <description>Converts &lt;rs&gt; in TEI to &lt;persName&gt;, &lt;placeName&gt; or &lt;subject&gt;,
+        if the @key starts with &apos;P:&apos;, &apos;O:&apos; and &apos;S:&apos;. Please be careful when using this stylesheet, since it
+        might produce undesired outcome. This option MUST NOT be combined with &quot;rs add @type&quot;.</description>
+      <xsltStylesheets>
         <string>additional/rsToRef.xsl</string>
       </xsltStylesheets>
       <defaultParameters/>
     </ConversionOption>
     <ConversionOption>
-      <name>RecogGermanDates</name>
-      <description>Tries to find dates in German (e.g. &apos;17.10.2000&apos;, &apos;8. 2. 1876&apos;, &apos;März 1768&apos; or &apos;1492&apos;) and convert them to &lt;date&gt; with @when.</description>
+      <name>rs add @type</name>
+      <description>Adds @type to &lt;rs&gt; if the @key starts with &apos;P:&apos;, &apos;O:&apos; and &apos;S:&apos;. The @type value can be
+        either &quot;person&gt;, &quot;place&gt;, &quot;subject&gt; or &quot;remark&gt;. Please be careful when
+        using this stylesheet, since it might produce undesired outcome. This option MUST NOT be combined
+        with &quot;rs to ref&quot;.</description>
       <xsltStylesheets>
-        <string>additional/germanDates.xsl</string>
+        <string>additional/rsAddType.xsl</string>
       </xsltStylesheets>
       <defaultParameters/>
     </ConversionOption>
     <ConversionOption>
-      <name>RsToRef</name>
-      <description>Converts &lt;rs&gt; in TEI to &lt;persName&gt;, &lt;placeName&gt; or &lt;subject&gt;, if the @key starts with &apos;P:&apos;, &apos;O:&apos; and &apos;S:&apos;.</description>
-      <xsltStylesheets>
-        <string>additional/rsToRef.xsl</string>
-      </xsltStylesheets>
-      <defaultParameters/>
-    </ConversionOption>
-    <ConversionOption>
-      <name>+NewLineAfterP</name>
+      <name>New line before p</name>
       <description>Adds a new line before each &lt;div&gt; and &lt;p&gt;.</description>
       <xsltStylesheets>
         <string>additional/addRN2P.xsl</string>
       </xsltStylesheets>
       <defaultParameters/>
     </ConversionOption>
-  </conversionOptionSet>
+    <ConversionOption>
+      <name>Recognize German dates</name>
+      <description>Tries to find dates in German (e.g. &apos;17.10.2000&apos;, &apos;8. 2. 1876&apos;, &apos;März 1768&apos; or &apos;1492&apos;)
+        and convert them to &lt;date&gt; with @when. Please be careful, this stylesheet might produce
+        undesired outcomes.</description>
+      <xsltStylesheets>
+        <string>additional/germanDates.xsl</string>
+      </xsltStylesheets>
+      <defaultParameters/>
+    </ConversionOption>
+  </conversionOptions>
   <savingLocation>./programSetup.xml</savingLocation>
 </ProgrammSetup>

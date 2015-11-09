@@ -1,29 +1,30 @@
 package at.ac.uibk.igwee;
 
-import at.ac.uibk.igwee.controller.ConversionOption;
 import at.ac.uibk.igwee.controller.ProgramSetup;
 import at.ac.uibk.igwee.docx2tei.Docx2TeiService;
 import at.ac.uibk.igwee.docx2tei.impl.Docx2TeiServiceImpl;
 import at.ac.uibk.igwee.xslt.XsltService;
 import at.ac.uibk.igwee.xslt.impl.SaxonXsltServiceImpl;
-import at.ac.uibk.igwee.ziputils.api.Unzipper;
-import org.apache.commons.io.FileUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.File;
-import java.io.InputStream;
-import java.util.*;
 
 /**
  * Created by Joseph on 29.10.2015.
+ *
+ * This file is used as setting for TestServer. Instead of copying additional
+ * stylesheets to the temporary directory. It uses the "./src/main/resources/additional"
+ * as the base directory. By doing so, the changes in the stylesheets will automatically
+ * be reflected in the TestServer. This eases the developing and debugging process for
+ * the XSLT stylesheets.
+ *
+ * @author joseph
  */
 @Configuration
 @ComponentScan(basePackages = {"at.ac.uibk.igwee.controller"})
 public class TestConfiguration {
-
-    private static final String ADDITIONAL_FOLDER = "docx2tei_add";
 
     @Bean
     public XsltService xsltService() {
@@ -42,18 +43,7 @@ public class TestConfiguration {
 
         File tmpLck = File.createTempFile("tempStylesheets", ".lck");
         File tmpDir = tmpLck.getParentFile();
-        File additionalDir = new File(tmpDir, ADDITIONAL_FOLDER);
-        File addFile = new File(tmpDir, "docx2tei_add.zip");
-        if (!additionalDir.mkdirs() && !additionalDir.exists()) {
-            throw new Exception("Cannot create temporary directory: " + additionalDir.getAbsolutePath());
-        }
-        InputStream addStream = getClass().getResourceAsStream("/docx2tei_add.zip");
-        if (addStream==null) {
-            throw new Exception("Cannot find additional stylesheets!");
-        }
-        FileUtils.copyInputStreamToFile(addStream, addFile);
-        Unzipper.unpack(addFile, additionalDir);
-
+        File additionalDir = new File("./src/main/resources/additional");
 
 //        List<String> commentToRef = new ArrayList<>();
 //        commentToRef.add("additional/igwee/commentToRs.xsl");

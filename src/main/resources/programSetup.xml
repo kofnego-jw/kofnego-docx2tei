@@ -1,41 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ProgrammSetup>
-  <conversionOptionSet>
+  <conversionOptions>
     <ConversionOption>
-      <name>NewLineAfterP</name>
+      <name>MS comments to rs</name>
+      <description>Converts comments created using the commenting function in DOCX to &lt;rs&gt;.
+        This stylesheet MUST come before &quot;UIBK to &lt;anchor&gt;&quot;.</description>
+      <xsltStylesheets>
+        <string>additional/commentToRs.xsl</string>
+      </xsltStylesheets>
+    </ConversionOption>
+    <ConversionOption>
+      <name>UIBK to anchor</name>
+      <description>Default conversion will convert the anchors in DOCX comments to &lt;uibk:comment&gt;.
+        This stylesheet will convert the &lt;uibk:comment&gt; to &lt;tei:anchor&gt;.
+        When combined with &quot;MS comments&quot;, this stylesheet MUST come after &quot;MS comments&quot;.</description>
+      <xsltStylesheets>
+        <string>additional/uibk2anchor.xsl</string>
+      </xsltStylesheets>
+    </ConversionOption>
+    <ConversionOption>
+      <name>rs to ref</name>
+      <description>Converts &lt;rs&gt; in TEI to &lt;persName&gt;, &lt;placeName&gt; or &lt;subject&gt;,
+        if the @key starts with 'P:', 'O:' and 'S:'. Please be careful when using this stylesheet, since it
+        might produce undesired outcome. This option MUST NOT be combined with &quot;rs add @type&quot;.</description>
+      <xsltStylesheets>
+        <string>additional/rsToRef.xsl</string>
+      </xsltStylesheets>
+    </ConversionOption>
+    <ConversionOption>
+      <name>rs add @type</name>
+      <description>Adds @type to &lt;rs&gt; if the @key starts with 'P:', 'O:' and 'S:'. The @type value can be
+        either &quot;person&gt;, &quot;place&gt;, &quot;subject&gt; or &quot;remark&gt;. Please be careful when
+        using this stylesheet, since it might produce undesired outcome. This option MUST NOT be combined
+        with &quot;rs to ref&quot;.</description>
+      <xsltStylesheets>
+        <string>additional/rsAddType.xsl</string>
+      </xsltStylesheets>
+    </ConversionOption>
+    <ConversionOption>
+      <name>New line before p</name>
       <description>Adds a new line before each &lt;div&gt; and &lt;p&gt;.</description>
       <xsltStylesheets>
         <string>additional/addRN2P.xsl</string>
       </xsltStylesheets>
     </ConversionOption>
     <ConversionOption>
-      <name>CommentToRS</name>
-      <description>Converts comments in DOCX using the commenting function to &lt;rs&gt;.</description>
-      <xsltStylesheets>
-        <string>additional/commentToRs.xsl</string>
-      </xsltStylesheets>
-    </ConversionOption>
-    <ConversionOption>
-      <name>uibkToAnchor</name>
-      <description>Converts the &lt;uibk:comment&gt; to &lt;tei:anchor&gt;</description>
-      <xsltStylesheets>
-        <string>additional/uibk2anchor.xsl</string>
-      </xsltStylesheets>
-    </ConversionOption>
-    <ConversionOption>
-      <name>RsToRef</name>
-      <description>Converts &lt;rs&gt; in TEI to &lt;persName&gt;, &lt;placeName&gt; or &lt;subject&gt;, if the @key starts with 'P:', 'O:' and 'S:'.</description>
-      <xsltStylesheets>
-        <string>additional/rsToRef.xsl</string>
-      </xsltStylesheets>
-    </ConversionOption>
-    <ConversionOption>
-      <name>RecogGermanDates</name>
-      <description>Tries to find dates in German (e.g. '17.10.2000', '8. 2. 1876', 'März 1768' or '1492') and convert them to &lt;date&gt; with @when.</description>
+      <name>Recognize German dates</name>
+      <description>Tries to find dates in German (e.g. '17.10.2000', '8. 2. 1876', 'März 1768' or '1492')
+        and convert them to &lt;date&gt; with @when. Please be careful, this stylesheet might produce
+        undesired outcomes.</description>
       <xsltStylesheets>
         <string>additional/germanDates.xsl</string>
       </xsltStylesheets>
     </ConversionOption>
-  </conversionOptionSet>
+  </conversionOptions>
   <savingLocation>./programSetup.xml</savingLocation>
 </ProgrammSetup>
